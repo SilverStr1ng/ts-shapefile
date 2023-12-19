@@ -86,6 +86,8 @@ export class DbfReader {
 
     // Skip to field defs
     let recordIdx = 32;
+    // 创建一个 utf-8 解码器, 用于解析中文的字段名
+    let decoder = new TextDecoder('utf8');
     while (true) {
       s.seek(recordIdx);
       const firstByte = s.peekByte();
@@ -98,7 +100,8 @@ export class DbfReader {
         if (charCode === 0) {
           break;
         }
-        fieldName += String.fromCharCode(charCode);
+        let uint8array = new Uint8Array([charCode]);
+        fieldName += decoder.decode(uint8array); // 使用解码器将 UTF-8 编码转换为字符串
       }
       fieldName = fieldName.trim();
       s.seek(recordIdx + 11);
