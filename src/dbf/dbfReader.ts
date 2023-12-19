@@ -99,10 +99,13 @@ export class DbfReader {
           break;
         }
         fieldName += String.fromCharCode(charCode);
-        console.log(`charCode: ${charCode}, fieldName: ${fieldName}`);
       }
       fieldName = fieldName.trim();
-      s.seek(recordIdx + 11);
+      // 如果filedName的第一个字母不是字母, 则说明是中文乱码, 需要转换
+      if (/^[a-zA-Z]/.test(fieldName) === false) {
+        fieldName = this._decoder!.decode(new Uint8Array(fieldName.split('').map((c) => c.charCodeAt(0))));
+      }
+      s.seek(recordIdx + 11); 
       const fieldTypeCode = s.readByte();
       const fieldType: DbfFieldType = String.fromCharCode(fieldTypeCode) as DbfFieldType;
       s.seek(recordIdx + 16);

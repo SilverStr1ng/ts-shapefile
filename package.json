@@ -1,9 +1,9 @@
 {
   "name": "ts-shapefile-test",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "TypeScript based shapefile reader",
-  "main": "./ts-shape.cjs.js",
-  "module": "./ts-shape.esm.js",
+  "main": "./index.ts",
+  "module": "./index.ts",
   "types": "./types/index.d.ts",
   "author": "Oyvind Idland",
   "license": "MIT",
